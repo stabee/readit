@@ -5,7 +5,7 @@ const routes = require("./routes");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
