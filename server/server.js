@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const routes = require("./routes");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -20,6 +21,7 @@ db.on("connected", () => {
   console.log("Successfully connected to MongoDB");
 });
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api", routes);
