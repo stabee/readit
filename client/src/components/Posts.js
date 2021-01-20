@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getPosts } from "../services/posts";
 import { convertDate } from "../helpers";
 
@@ -13,7 +14,9 @@ const Posts = () => {
     <div>
       {posts.map(post => (
         <div key={post._id}>
-          <h2>{post.title}</h2>
+          <Link to={`/posts/${post._id}`}>
+            <h2>{post.title}</h2>
+          </Link>
           <p>
             by {post.author} on {convertDate(post.date)}
           </p>

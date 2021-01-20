@@ -4,7 +4,9 @@ import Navbar from "react-bootstrap/Navbar";
 const TopNav = () => {
   return (
     <Navbar bg="dark" variant="dark">
-      <Navbar.Brand href="/">Private Forum</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/">
+        Private Forum
+      </Navbar.Brand>
     </Navbar>
   );
 };
