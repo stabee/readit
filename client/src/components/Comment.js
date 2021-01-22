@@ -6,7 +6,11 @@ const Comment = ({ post, postLoading }) => {
     if (post.comments) {
       return (
         <div>
-          <h3>Comments</h3>
+          <h3>
+            {post.comments.length > 1
+              ? `${post.comments.length} Comments`
+              : `${post.comments.length} Comment`}
+          </h3>
           {post.comments.map(comment => (
             <div key={comment._id}>
               <p>{comment.body}</p>

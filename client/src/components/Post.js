@@ -8,7 +8,8 @@ import { convertDate } from "../helpers";
 const Post = () => {
   const [post, setPost] = useState({});
   const [postLoading, setPostLoading] = useState(true);
-  let { id } = useParams();
+
+  const { id } = useParams();
   useEffect(() => {
     getPost(id).then(res => {
       console.log(res);
@@ -16,12 +17,13 @@ const Post = () => {
       setPostLoading(false);
     });
   }, []);
+
   return (
     <div>
       <h1>{post.title || <Skeleton width={100} />}</h1>
       <small style={{ width: 100 }}>
-        {post.author ? (
-          `by ${post.author} on ${convertDate(post.date)}`
+        {post.user ? (
+          `by ${post.user.username} on ${convertDate(post.date)}`
         ) : (
           <Skeleton width={100} />
         )}

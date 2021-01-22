@@ -3,7 +3,15 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+
+import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+const userToken = localStorage.getItem("userToken");
+if (userToken) {
+  axios.defaults.headers.common["Authorization"] = "Bearer " + userToken;
+}
 
 ReactDOM.render(
   <React.StrictMode>

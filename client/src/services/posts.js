@@ -9,3 +9,7 @@ export function getPost(id) {
     .get(`http://localhost:3001/api/posts/${id}`)
     .then(res => res.data);
 }
+
+export function createPost(title, body) {
+  return axios.post("http://localhost:3001/api/posts", { title, body });
+}

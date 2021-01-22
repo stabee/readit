@@ -18,7 +18,7 @@ const Posts = () => {
             <h2>{post.title}</h2>
           </Link>
           <p>
-            by {post.author} on {convertDate(post.date)}
+            by {post.user.username} on {convertDate(post.date)}
           </p>
         </div>
       ))}
