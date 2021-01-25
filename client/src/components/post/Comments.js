@@ -1,9 +1,9 @@
-import { convertDate } from "../helpers";
 import Skeleton from "react-loading-skeleton";
+import moment from "moment";
 
 const Comment = ({ post, postLoading }) => {
   if (!postLoading) {
-    if (post.comments) {
+    if (post.comments.length > 0) {
       return (
         <div>
           <h3>
@@ -15,7 +15,8 @@ const Comment = ({ post, postLoading }) => {
             <div key={comment._id}>
               <p>{comment.body}</p>
               <small>
-                - {comment.user.username} on {convertDate(comment.createdAt)}
+                - {comment.user.username} on{" "}
+                {moment(comment.createdAt).fromNow()}
               </small>
             </div>
           ))}
@@ -24,7 +25,7 @@ const Comment = ({ post, postLoading }) => {
     } else {
       return (
         <div>
-          <h3>Be the first to comment!</h3>
+          <h3>No comments</h3>
         </div>
       );
     }

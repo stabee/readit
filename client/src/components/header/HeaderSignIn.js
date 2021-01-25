@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Nav from "react-bootstrap/Nav";
-import SignupModal from "./SignupMoal";
+import SignupModal from "./SignupModal";
 import LoginModal from "./LoginModal";
 import Row from "react-bootstrap/Row";
 

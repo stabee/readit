@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { createPost } from "../services/posts";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,13 +8,15 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
+  const history = useHistory();
+
   const updateTitle = e => setTitle(e.target.value);
 
   const updateBody = e => setBody(e.target.value);
 
   const submitPost = e => {
     e.preventDefault();
-    createPost(title, body).then(res => console.log(res));
+    createPost(title, body).then(() => history.push("/"));
   };
 
   return (

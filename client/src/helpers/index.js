@@ -1,1 +1,3 @@
-export const convertDate = date => new Date(date).toLocaleString();
+export const userLoggedIn = () => {
+  return !!window.localStorage.getItem("userToken");
+};

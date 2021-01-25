@@ -8,7 +8,7 @@ const getAllPosts = async token => {
     decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
   }
 
-  const posts = await postModel.find({}, "-comments").populate("user");
+  const posts = await postModel.find({}).populate("user");
   if (!token || !decodedToken.id) {
     posts.forEach(post => {
       post.user.username = "Anonymous";

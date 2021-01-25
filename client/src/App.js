@@ -1,6 +1,6 @@
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import HomePage from "./pages/HomePage";
-import Post from "./components/Post";
+import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import { Switch, Route } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route path="/posts/create" component={CreatePost} />
-        <Route path="/posts/:id" component={Post} />
+        <Route path="/posts/:id" component={PostPage} />
         <Route path="/" component={HomePage} />
       </Switch>
     </div>

@@ -1,7 +1,7 @@
 const { commentService } = require("../services");
 const { getTokenFrom } = require("../helpers/auth");
 
-const createComment = async (req, res, next) => {
+const createComment = async (req, res) => {
   try {
     const token = getTokenFrom(req);
     const comment = await commentService.createComment(token, req.body.postId, {
