@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import Skeleton from "react-loading-skeleton";
-import { getPost } from "../../services/posts";
 import moment from "moment";
+import { getPost } from "../../services/posts";
 
 const Post = () => {
   const [post, setPost] = useState({});
@@ -29,7 +29,7 @@ const Post = () => {
       ) : (
         <Skeleton width={100} />
       )}
-      <CommentForm postId={id} />
+      <CommentForm post={post} />
       <Comments post={post} postLoading={postLoading} />
     </div>
   );

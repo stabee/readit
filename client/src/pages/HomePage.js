@@ -1,13 +1,28 @@
 import Posts from "../components/home/Posts";
-import CreatePostButton from "../components/home/CreatePostButton";
-import { userLoggedIn } from "../helpers";
+import RightMenu from "../components/home/RightMenu";
+import styled from "styled-components/macro";
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const LeftContainer = styled.div`
+  flex: 1 1 0%;
+`;
+
+const RightContainer = styled.div``;
 
 const HomePage = () => {
   return (
-    <>
-      <Posts />
-      {userLoggedIn() ? <CreatePostButton /> : ""}
-    </>
+    <FlexContainer>
+      <LeftContainer>
+        <Posts />
+      </LeftContainer>
+      <RightContainer>
+        <RightMenu />
+      </RightContainer>
+    </FlexContainer>
   );
 };
 

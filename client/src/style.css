@@ -1,3 +1,19 @@
 * {
-  font-family: verdana, arial, helvetica, sans-serif
+  font-family: verdana, arial, helvetica, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: rgb(69, 79, 91) !important;
+}
+
+a:hover {
+  color: rgb(24, 144, 255) !important;
+}
+
+a.active > * {
+  background-color: rgb(250, 250, 250);
+  border-left: 3px solid rgb(24, 144, 255) !important; 
 }

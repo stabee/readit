@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { createComment } from "../../services/comments";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { createComment } from "../../services/comments";
 
-const CommentForm = ({ postId }) => {
+const CommentForm = ({ post }) => {
   const [body, setBody] = useState("");
-
-  const handleChange = e => {
-    setBody(e.target.value);
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    createComment(postId, body).then(res => console.log(res));
-    console.log("Submitting");
+    createComment(post._id, body).then(res => {
+      console.log(res);
+      window.location.reload();
+    });
+  };
+
+  const handleChange = e => {
+    setBody(e.target.value);
   };
 
   return (

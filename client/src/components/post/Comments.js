@@ -15,8 +15,7 @@ const Comment = ({ post, postLoading }) => {
             <div key={comment._id}>
               <p>{comment.body}</p>
               <small>
-                - {comment.user.username} on{" "}
-                {moment(comment.createdAt).fromNow()}
+                - {comment.user.username} {moment(comment.createdAt).fromNow()}
               </small>
             </div>
           ))}
