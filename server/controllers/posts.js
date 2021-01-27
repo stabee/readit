@@ -43,8 +43,23 @@ const createPost = async (req, res, next) => {
   }
 };
 
+const vote = async (req, res) => {
+  try {
+    const token = getTokenFrom(req);
+
+    const post = await postService.vote(req.body.value, req.body.postId, token);
+
+    res.json(post);
+  } catch (e) {
+    res.status(500).json({
+      error: e.message
+    });
+  }
+};
+
 module.exports = {
   getAllPosts,
   createPost,
-  getOnePost
+  getOnePost,
+  vote
 };

@@ -1,10 +1,40 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import Skeleton from "react-loading-skeleton";
 import moment from "moment";
 import { getPost } from "../../services/posts";
+import styled from "styled-components/macro";
+
+const StyledPost = styled.div`
+  border: 1px solid rgb(235, 237, 240);
+  background-color: #fff;
+`;
+
+const PostHeader = styled.h1`
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(69, 79, 91);
+  padding: 10px;
+  margin: 0;
+`;
+
+const PostBody = styled.p`
+  margin: 0;
+  padding: 5px 10px;
+  background-color: rgb(252, 252, 252);
+  color: rgb(69, 79, 91);
+  border-top: 1px solid rgb(235, 237, 240);
+  border-bottom: 1px solid rgb(235, 237, 240);
+  font-size: 15px;
+`;
+
+const PostBottom = styled.div`
+  padding: 10px 10px;
+  font-size: 13px;
+  color: rgb(69, 79, 91);
+`;
 
 const Post = () => {
   const [post, setPost] = useState({});
@@ -20,18 +50,23 @@ const Post = () => {
   }, [id]);
 
   return (
-    <div>
-      <h1>{post.title || <Skeleton width={100} />}</h1>
-      <small style={{ width: 100 }}></small>
-      <p>{post.body}</p>
-      {post.user ? (
-        `Posted by ${post.user.username} ${moment(post.date).fromNow()}`
-      ) : (
-        <Skeleton width={100} />
-      )}
-      <CommentForm post={post} />
+    <>
+      <StyledPost>
+        <PostHeader>{post.title || <Skeleton />}</PostHeader>
+        <PostBody>{post.body || <Skeleton />}</PostBody>
+        <PostBottom>
+          {post.user ? (
+            `${post.comments.length} comments by ${post.user.username} ${moment(
+              post.date
+            ).fromNow()}`
+          ) : (
+            <Skeleton />
+          )}
+        </PostBottom>
+        <CommentForm post={post} />
+      </StyledPost>
       <Comments post={post} postLoading={postLoading} />
-    </div>
+    </>
   );
 };
 

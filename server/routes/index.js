@@ -6,8 +6,9 @@ const router = express.Router();
 
 // Posts routes
 router.get("/posts", posts.getAllPosts);
-router.post("/posts", posts.createPost);
 router.get("/posts/:id", posts.getOnePost);
+router.post("/vote", posts.vote);
+router.post("/posts", posts.createPost);
 
 // Comments routes
 router.post("/comments", comments.createComment);

@@ -8,6 +8,12 @@ import axios from "axios";
 import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+
+library.add(far, faCaretUp, faCaretDown);
+
 const userToken = localStorage.getItem("userToken");
 if (userToken) {
   axios.defaults.headers.common["Authorization"] = "Bearer " + userToken;

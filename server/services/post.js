@@ -8,10 +8,23 @@ const getAllPosts = async token => {
     decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
   }
 
-  const posts = await postModel.find({}).populate("user");
+  const posts = await postModel
+    .find({})
+    .populate("user")
+    .lean();
   if (!token || !decodedToken.id) {
     posts.forEach(post => {
       post.user.username = "Anonymous";
+      post.userVoteValue = 0;
+    });
+  } else {
+    posts.map(post => {
+      const userVote = post.votes.find(vote => vote.user === decodedToken.id);
+      if (userVote) {
+        post.userVoteValue = userVote.vote;
+      } else {
+        post.userVoteValue = 0;
+      }
     });
   }
 
@@ -27,14 +40,17 @@ const getOnePost = async (token, id) => {
 
   const post = await postModel
     .findById({ _id: id })
+    .populate("user")
     .populate({
       path: "comments",
       populate: {
         path: "user",
         select: { _id: 1, username: 1 }
+      },
+      options: {
+        sort: "-createdAt"
       }
-    })
-    .populate("user");
+    });
 
   if (!token || !decodedToken.id) {
     post.user.username = "Anonymous";
@@ -59,18 +75,37 @@ const createPost = async (title, body, token) => {
 
   const user = await userModel.findById(decodedToken.id);
 
-  postModel.create(
-    {
+  postModel
+    .create({
       title,
       body,
       user
-    },
-    function(err, post) {
-      if (err) console.log(err);
-      console.log(post);
-      return post;
-    }
-  );
+    })
+    .then(post => post)
+    .catch(err => {
+      throw new Error(err);
+    });
 };
 
-module.exports = { getAllPosts, getOnePost, createPost };
+const vote = async (value, postId, token) => {
+  const post = await postModel.findById(postId);
+  const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+  const existingVote = post.votes.find(vote => vote.user === decodedToken.id);
+
+  if (existingVote) {
+    post.voteCount -= existingVote.vote;
+    if (value === 0) {
+      post.votes.pull(existingVote);
+    } else {
+      post.voteCount += value;
+      existingVote.vote = value;
+    }
+  } else {
+    post.voteCount += value;
+    post.votes.push({ user: decodedToken.id, vote: value });
+  }
+
+  return post.save();
+};
+
+module.exports = { getAllPosts, getOnePost, createPost, vote };

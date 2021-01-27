@@ -19,8 +19,18 @@ const postSchema = new Schema({
     default: Date.now
   },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  meta: {
-    votes: Number
+  voteCount: {
+    type: Number,
+    default: 0
+  },
+  votes: [{ user: Schema.Types.Object, vote: Number, _id: false }],
+  views: {
+    type: Number,
+    default: 0
+  },
+  category: {
+    type: String,
+    enum: ["programming", "music", "news", "books", "tv", "funny"]
   }
 });
 

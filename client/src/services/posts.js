@@ -11,3 +11,7 @@ export function getPost(id) {
 export function createPost(title, body) {
   return axios.post("/api/posts", { title, body });
 }
+
+export function vote(value, postId) {
+  return axios.post("/api/vote", { value, postId });
+}
