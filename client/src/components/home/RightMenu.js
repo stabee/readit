@@ -5,6 +5,10 @@ import styled from "styled-components/macro";
 
 const MenuContainer = styled.div`
   width: 15vw;
+
+  @media only screen and (max-width: 960px) {
+    display: none;
+  }
 `;
 
 const RightMenu = () => {

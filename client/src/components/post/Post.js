@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import VoteSection from "../shared/VoteSection";
@@ -57,7 +57,6 @@ const Post = () => {
     getPost(id)
       .then(res => {
         setPost(res);
-        console.log(res);
       })
       .finally(() => setPostLoading(false));
   }, [id]);

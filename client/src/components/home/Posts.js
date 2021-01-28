@@ -14,7 +14,6 @@ const Posts = () => {
     setPostsLoading(true);
     getPosts(category, username)
       .then(posts => {
-        console.log(posts);
         setPosts(posts);
       })
       .finally(() => {

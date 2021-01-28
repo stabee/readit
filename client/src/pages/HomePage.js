@@ -1,4 +1,5 @@
 import Posts from "../components/home/Posts";
+import CategoryDropdown from "../components/home/CategoryDropdown";
 import RightMenu from "../components/home/RightMenu";
 import styled from "styled-components/macro";
 
@@ -11,21 +12,14 @@ const LeftContainer = styled.div`
   flex: 1 1 0%;
 `;
 
-const RightContainer = styled.div`
-  @media only screen and (max-width: 960px) {
-    display: none;
-  }
-`;
-
 const HomePage = () => {
   return (
     <FlexContainer>
       <LeftContainer>
+        <CategoryDropdown />
         <Posts />
       </LeftContainer>
-      <RightContainer>
-        <RightMenu />
-      </RightContainer>
+      <RightMenu />
     </FlexContainer>
   );
 };
