@@ -11,6 +11,10 @@ const StyledPost = styled.div`
   background-color: #fff;
   border: 1px solid rgb(235, 237, 240);
   margin-right: 30px;
+
+  @media only screen and (max-width: 960px) {
+    margin-right: 0;
+  }
 `;
 
 const PostRightContainer = styled.div`

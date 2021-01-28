@@ -11,7 +11,11 @@ const LeftContainer = styled.div`
   flex: 1 1 0%;
 `;
 
-const RightContainer = styled.div``;
+const RightContainer = styled.div`
+  @media only screen and (max-width: 960px) {
+    display: none;
+  }
+`;
 
 const HomePage = () => {
   return (

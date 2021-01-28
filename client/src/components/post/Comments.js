@@ -23,33 +23,25 @@ const CommentBody = styled.p`
 
 const Comment = ({ post, postLoading }) => {
   if (!postLoading) {
-    if (post.comments.length > 0) {
-      return (
-        <div>
-          {post.comments.map(comment => (
-            <CommentBox key={comment._id}>
-              <CommentAuthor>
-                {userLoggedIn() ? (
-                  <Link to={`/u/${comment.user.username}`}>
-                    <strong>{comment.user.username}</strong>
-                  </Link>
-                ) : (
+    return (
+      <div>
+        {post.comments.map(comment => (
+          <CommentBox key={comment._id}>
+            <CommentAuthor>
+              {userLoggedIn() ? (
+                <Link to={`/u/${comment.user.username}`}>
                   <strong>{comment.user.username}</strong>
-                )}{" "}
-                {moment(comment.createdAt).fromNow()}
-              </CommentAuthor>
-              <CommentBody>{comment.body}</CommentBody>
-            </CommentBox>
-          ))}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <h3>No comments</h3>
-        </div>
-      );
-    }
+                </Link>
+              ) : (
+                <strong>{comment.user.username}</strong>
+              )}{" "}
+              {moment(comment.createdAt).fromNow()}
+            </CommentAuthor>
+            <CommentBody>{comment.body}</CommentBody>
+          </CommentBox>
+        ))}
+      </div>
+    );
   } else {
     return <Skeleton count={3} height={70} />;
   }

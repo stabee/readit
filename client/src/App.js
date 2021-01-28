@@ -13,6 +13,10 @@ const Background = styled.div`
 
 const Container = styled.div`
   margin: 0 10vw;
+
+  @media only screen and (max-width: 960px) {
+    margin: 0;
+  }
 `;
 
 const App = () => {
