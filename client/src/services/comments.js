@@ -8,3 +8,7 @@ export function createComment(postId, body) {
     })
     .then(res => res.data);
 }
+
+export function deleteComment(commentId) {
+  return axios.delete(`/api/comments/${commentId}`);
+}

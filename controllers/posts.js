@@ -47,6 +47,19 @@ const createPost = async (req, res, next) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const token = getTokenFrom(req);
+
+    const post = await postService.deletePost(token, req.params.id);
+
+    res.json(post);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ error: e.message });
+  }
+};
+
 const vote = async (req, res) => {
   try {
     const token = getTokenFrom(req);
@@ -64,5 +77,6 @@ module.exports = {
   getAllPosts,
   createPost,
   getOnePost,
+  deletePost,
   vote
 };

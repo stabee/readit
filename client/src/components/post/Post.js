@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
+import PostBottomInfo from "./PostBottomInfo";
 import VoteSection from "../shared/VoteSection";
 import Skeleton from "react-loading-skeleton";
-import moment from "moment";
 import { getPost } from "../../services/posts";
 import styled from "styled-components/macro";
 
@@ -70,13 +70,7 @@ const Post = () => {
             <PostHeader>{post.title || <Skeleton />}</PostHeader>
             <PostBody>{post.body || <Skeleton />}</PostBody>
             <PostBottom>
-              {post.user ? (
-                `${post.comments.length} comments /r/${post.category} by ${
-                  post.user.username
-                } ${moment(post.date).fromNow()}`
-              ) : (
-                <Skeleton />
-              )}
+              {!postLoading ? <PostBottomInfo post={post} /> : <Skeleton />}
             </PostBottom>
           </PostContent>
         </FullPost>

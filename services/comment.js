@@ -20,4 +20,20 @@ const createComment = async (token, postId, comment) => {
   });
 };
 
-module.exports = { createComment };
+const deleteComment = async (token, id) => {
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!token || !decodedToken.id) {
+    throw new Error("User not authorized to delete this comment");
+  }
+
+  const comment = await commentModel.findById(id).populate("user");
+
+  if (String(comment.user._id) !== String(decodedToken.id)) {
+    throw new Error("User not authorized to delete this comment");
+  }
+
+  return await commentModel.findByIdAndDelete(comment._id);
+};
+
+module.exports = { createComment, deleteComment };

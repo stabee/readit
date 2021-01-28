@@ -16,6 +16,18 @@ const createComment = async (req, res) => {
   }
 };
 
+const deleteComment = async (req, res) => {
+  try {
+    const token = getTokenFrom(req);
+    const deletedComment = commentService.deleteComment(token, req.params.id);
+    res.json(deletedComment);
+  } catch (e) {
+    console.log(e);
+    res.json(400).send({ error: e.message });
+  }
+};
+
 module.exports = {
-  createComment
+  createComment,
+  deleteComment
 };

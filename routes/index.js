@@ -8,10 +8,12 @@ const router = express.Router();
 router.get("/posts", posts.getAllPosts);
 router.post("/posts", posts.createPost);
 router.get("/posts/:id", posts.getOnePost);
+router.delete("/posts/:id", posts.deletePost);
 router.post("/vote", posts.vote);
 
 // Comments routes
 router.post("/comments", comments.createComment);
+router.delete("/comments/:id", comments.deleteComment);
 
 // Auth routes
 router.post("/login", auth.validators(), auth.login);

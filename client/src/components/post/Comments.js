@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import moment from "moment";
 import styled from "styled-components/macro";
 import { userLoggedIn } from "../../helpers";
+import { deleteComment } from "../../services/comments";
 
 const CommentBox = styled.div`
   margin-top: 10px;
@@ -21,7 +22,21 @@ const CommentBody = styled.p`
   padding: 8px;
 `;
 
+const DeleteButton = styled.span`
+  color: red;
+  cursor: pointer;
+  margin-left: 15px;
+`;
+
 const Comment = ({ post, postLoading }) => {
+  const history = useHistory();
+
+  const handleDelete = commentId => {
+    deleteComment(commentId).then(
+      () => (window.location = `/posts/${post._id}`)
+    );
+  };
+
   if (!postLoading) {
     return (
       <div>
@@ -36,6 +51,13 @@ const Comment = ({ post, postLoading }) => {
                 <strong>{comment.user.username}</strong>
               )}{" "}
               {moment(comment.createdAt).fromNow()}
+              {comment.isOwner ? (
+                <DeleteButton onClick={() => handleDelete(comment._id)}>
+                  delete
+                </DeleteButton>
+              ) : (
+                ""
+              )}
             </CommentAuthor>
             <CommentBody>{comment.body}</CommentBody>
           </CommentBox>

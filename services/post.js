@@ -71,6 +71,8 @@ const getOnePost = async (token, id) => {
     })
     .lean();
 
+  post.isOwner = false;
+
   if (!token || !decodedToken.id) {
     post.user.username = "Anonymous";
     post.comments.forEach(comment => {
@@ -83,7 +85,22 @@ const getOnePost = async (token, id) => {
     } else {
       post.userVoteValue = 0;
     }
+
+    if (String(decodedToken.id) === String(post.user._id)) {
+      post.isOwner = true;
+    }
   }
+
+  post.comments.map(comment => {
+    comment.isOwner = false;
+    if (
+      decodedToken &&
+      decodedToken.id &&
+      String(decodedToken.id) === String(comment.user._id)
+    ) {
+      comment.isOwner = true;
+    }
+  });
 
   return post;
 };
@@ -114,6 +131,26 @@ const createPost = async (title, body, category, token) => {
     });
 };
 
+const deletePost = async (token, id) => {
+  let decodedToken;
+
+  if (token) {
+    decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+  }
+
+  if (!token || !decodedToken.id) {
+    throw new Error("User not authorized to delete this post");
+  }
+
+  const post = await postModel.findById(id).populate("user");
+
+  if (String(post.user._id) !== String(decodedToken.id)) {
+    throw new Error("User not authorized to delete this post");
+  }
+
+  return await postModel.findByIdAndDelete(post._id);
+};
+
 const vote = async (value, postId, token) => {
   const post = await postModel.findById(postId);
   const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
@@ -135,4 +172,4 @@ const vote = async (value, postId, token) => {
   return post.save();
 };
 
-module.exports = { getAllPosts, getOnePost, createPost, vote };
+module.exports = { getAllPosts, getOnePost, createPost, deletePost, vote };
