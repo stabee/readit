@@ -1,5 +1,5 @@
 # About the Project
-Simplified version of a Reddit clone using Mongo, Express, and React. Built as a personal side project.
+Simplified clone of a Reddit using Mongo, Express, React, and Bootstrap. Non-logged in users cannot see usernames. Built as a personal side project.
 
 # Demo
 <ul><li><a href="https://scott-readit.herokuapp.com/">Live Site</a></li>
