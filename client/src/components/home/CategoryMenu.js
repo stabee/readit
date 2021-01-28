@@ -8,7 +8,7 @@ const CategoryMenu = () => {
         <ListGroup.Item>
           <strong>Categories</strong>
         </ListGroup.Item>
-        <NavLink to="/" activeClassName="active">
+        <NavLink exact to="/" activeClassName="active">
           <ListGroup.Item>all</ListGroup.Item>
         </NavLink>
         <NavLink to="/r/programming" activeClassName="active">
@@ -16,6 +16,18 @@ const CategoryMenu = () => {
         </NavLink>
         <NavLink to="/r/music" activeClassName="active">
           <ListGroup.Item>music</ListGroup.Item>
+        </NavLink>
+        <NavLink to="/r/news" activeClassName="active">
+          <ListGroup.Item>news</ListGroup.Item>
+        </NavLink>
+        <NavLink to="/r/books" activeClassName="active">
+          <ListGroup.Item>books</ListGroup.Item>
+        </NavLink>
+        <NavLink to="/r/tv" activeClassName="active">
+          <ListGroup.Item>tv</ListGroup.Item>
+        </NavLink>
+        <NavLink to="/r/funny" activeClassName="active">
+          <ListGroup.Item>funny</ListGroup.Item>
         </NavLink>
       </ListGroup>
     </div>

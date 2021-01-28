@@ -24,6 +24,8 @@ const App = () => {
           <Switch>
             <Route path="/posts/create" component={CreatePost} />
             <Route path="/posts/:id" component={PostPage} />
+            <Route path="/r/:category" component={HomePage} />
+            <Route path="/u/:username" component={HomePage} />
             <Route exact path="/" component={HomePage} />
           </Switch>
         </Container>

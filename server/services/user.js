@@ -25,7 +25,7 @@ const login = async (username, password) => {
       username: user.username
     };
   } catch (e) {
-    return { error: e };
+    throw new Error(e.message);
   }
 };
 
@@ -33,8 +33,13 @@ const signup = (username, password) => {
   try {
     return User.create({ username, password });
   } catch (e) {
-    throw new Error("Something went wrong");
+    throw new Error(e.message);
   }
 };
 
-module.exports = { login, signup };
+const userExists = async username => {
+  const exists = await User.findOne({ username });
+  if (exists) throw new Error("Username already exists");
+};
+
+module.exports = { login, signup, userExists };

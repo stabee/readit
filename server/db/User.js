@@ -10,7 +10,8 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minLength: [6, "Password is too short"]
   },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 });

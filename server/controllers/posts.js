@@ -1,16 +1,19 @@
-const jwt = require("jsonwebtoken");
 const { postService } = require("../services");
 const { getTokenFrom } = require("../helpers/auth");
 
-const getAllPosts = async (req, res, next) => {
+const getAllPosts = async (req, res) => {
   try {
     const token = getTokenFrom(req);
 
-    const posts = await postService.getAllPosts(token);
+    const posts = await postService.getAllPosts(
+      token,
+      req.query.category,
+      req.query.username
+    );
     res.json(posts);
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500) && next(e);
+    res.status(500).json({ error: e.message });
   }
 };
 
@@ -22,7 +25,7 @@ const getOnePost = async (req, res, next) => {
     res.json(post);
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500) && next(e);
+    res.status(500).json({ error: e.message });
   }
 };
 
@@ -33,13 +36,14 @@ const createPost = async (req, res, next) => {
     const post = await postService.createPost(
       req.body.title,
       req.body.body,
+      req.body.category,
       token
     );
 
     res.json(post);
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500) && next(e);
+    res.status(500).json({ error: e.message });
   }
 };
 
@@ -51,9 +55,8 @@ const vote = async (req, res) => {
 
     res.json(post);
   } catch (e) {
-    res.status(500).json({
-      error: e.message
-    });
+    console.log(e.message);
+    res.status(500).json({ error: e.message });
   }
 };
 

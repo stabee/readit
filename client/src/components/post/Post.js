@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
+import VoteSection from "../shared/VoteSection";
 import Skeleton from "react-loading-skeleton";
 import moment from "moment";
 import { getPost } from "../../services/posts";
@@ -10,6 +11,17 @@ import styled from "styled-components/macro";
 const StyledPost = styled.div`
   border: 1px solid rgb(235, 237, 240);
   background-color: #fff;
+`;
+
+const FullPost = styled.div`
+  display: flex;
+  border-bottom: 1px solid rgb(235, 237, 240);
+`;
+
+const PostContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
 `;
 
 const PostHeader = styled.h1`
@@ -45,6 +57,7 @@ const Post = () => {
     getPost(id)
       .then(res => {
         setPost(res);
+        console.log(res);
       })
       .finally(() => setPostLoading(false));
   }, [id]);
@@ -52,17 +65,22 @@ const Post = () => {
   return (
     <>
       <StyledPost>
-        <PostHeader>{post.title || <Skeleton />}</PostHeader>
-        <PostBody>{post.body || <Skeleton />}</PostBody>
-        <PostBottom>
-          {post.user ? (
-            `${post.comments.length} comments by ${post.user.username} ${moment(
-              post.date
-            ).fromNow()}`
-          ) : (
-            <Skeleton />
-          )}
-        </PostBottom>
+        <FullPost>
+          <VoteSection post={post} />
+          <PostContent>
+            <PostHeader>{post.title || <Skeleton />}</PostHeader>
+            <PostBody>{post.body || <Skeleton />}</PostBody>
+            <PostBottom>
+              {post.user ? (
+                `${post.comments.length} comments /r/${post.category} by ${
+                  post.user.username
+                } ${moment(post.date).fromNow()}`
+              ) : (
+                <Skeleton />
+              )}
+            </PostBottom>
+          </PostContent>
+        </FullPost>
         <CommentForm post={post} />
       </StyledPost>
       <Comments post={post} postLoading={postLoading} />

@@ -1,8 +1,19 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import SignupModal from "./SignupModal";
 import LoginModal from "./LoginModal";
 import Row from "react-bootstrap/Row";
+import { getUsername } from "../../helpers";
+import styled from "styled-components/macro";
+
+const UsernameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgb(129, 142, 153);
+  padding: 0 1rem;
+  color: rgb(129, 142, 153);
+`;
 
 const HeaderSignIn = () => {
   const [showLoginModal, setLoginModal] = useState(false);
@@ -28,6 +39,7 @@ const HeaderSignIn = () => {
 
   const logOut = () => {
     window.localStorage.removeItem("userToken");
+    window.localStorage.removeItem("username");
     window.location.href = "/";
   };
 
@@ -48,9 +60,14 @@ const HeaderSignIn = () => {
     );
   } else {
     return (
-      <Nav.Link onClick={logOut} className="ml-auto">
-        Log Out
-      </Nav.Link>
+      <Row className="ml-auto">
+        <UsernameContainer>
+          <Link to={`/u/${getUsername()}`}>{getUsername()}</Link>
+        </UsernameContainer>
+        <Nav.Link onClick={logOut} className="ml-auto">
+          Log Out
+        </Nav.Link>
+      </Row>
     );
   }
 };

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import styled from "styled-components/macro";
 import VoteSection from "../shared/VoteSection";
+import { userLoggedIn } from "../../helpers";
 
 const StyledPost = styled.div`
   display: flex;
@@ -43,10 +44,19 @@ const Post = ({ post }) => {
         <Description>{post.body}</Description>
         <BottomSection>
           <Link to={`/posts/${post._id}`}>{post.comments.length} comments</Link>{" "}
+          {post.category ? (
+            <Link to={`/r/${post.category}`}>/r/{post.category}</Link>
+          ) : (
+            ""
+          )}{" "}
           by{" "}
-          <Link to={`/u/${post.user.username}`}>
+          {userLoggedIn() ? (
+            <Link to={`/u/${post.user.username}`}>
+              <strong>{post.user.username}</strong>
+            </Link>
+          ) : (
             <strong>{post.user.username}</strong>
-          </Link>{" "}
+          )}{" "}
           {moment(post.date).fromNow()}
         </BottomSection>
       </PostRightContainer>

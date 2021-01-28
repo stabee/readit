@@ -1,17 +1,35 @@
 const { postModel, userModel } = require("../db");
 const jwt = require("jsonwebtoken");
 
-const getAllPosts = async token => {
+const getAllPosts = async (token, category, username) => {
   let decodedToken;
 
   if (token) {
     decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
   }
 
-  const posts = await postModel
-    .find({})
-    .populate("user")
-    .lean();
+  let posts;
+  if (category) {
+    posts = await postModel
+      .find({ category })
+      .populate("user")
+      .sort("-voteCount")
+      .lean();
+  } else if (username) {
+    const user = await userModel.findOne({ username });
+    posts = await postModel
+      .find({ user: user._id })
+      .populate("user")
+      .sort("-voteCount")
+      .lean();
+  } else {
+    posts = await postModel
+      .find({})
+      .populate("user")
+      .sort("-voteCount")
+      .lean();
+  }
+
   if (!token || !decodedToken.id) {
     posts.forEach(post => {
       post.user.username = "Anonymous";
@@ -50,19 +68,27 @@ const getOnePost = async (token, id) => {
       options: {
         sort: "-createdAt"
       }
-    });
+    })
+    .lean();
 
   if (!token || !decodedToken.id) {
     post.user.username = "Anonymous";
     post.comments.forEach(comment => {
       comment.user.username = "Anonymous";
     });
+  } else {
+    const userVote = post.votes.find(vote => vote.user === decodedToken.id);
+    if (userVote) {
+      post.userVoteValue = userVote.vote;
+    } else {
+      post.userVoteValue = 0;
+    }
   }
 
   return post;
 };
 
-const createPost = async (title, body, token) => {
+const createPost = async (title, body, category, token) => {
   let decodedToken;
 
   if (token) {
@@ -79,6 +105,7 @@ const createPost = async (title, body, token) => {
     .create({
       title,
       body,
+      category,
       user
     })
     .then(post => post)

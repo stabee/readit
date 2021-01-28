@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import moment from "moment";
 import styled from "styled-components/macro";
+import { userLoggedIn } from "../../helpers";
 
 const CommentBox = styled.div`
   margin-top: 10px;
@@ -28,9 +29,13 @@ const Comment = ({ post, postLoading }) => {
           {post.comments.map(comment => (
             <CommentBox key={comment._id}>
               <CommentAuthor>
-                <Link to={`/u/${comment.user.username}`}>
+                {userLoggedIn() ? (
+                  <Link to={`/u/${comment.user.username}`}>
+                    <strong>{comment.user.username}</strong>
+                  </Link>
+                ) : (
                   <strong>{comment.user.username}</strong>
-                </Link>{" "}
+                )}{" "}
                 {moment(comment.createdAt).fromNow()}
               </CommentAuthor>
               <CommentBody>{comment.body}</CommentBody>
