@@ -2,7 +2,7 @@ import Header from "./components/header/Header";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components/macro";
 
 const Background = styled.div`
@@ -31,6 +31,7 @@ const App = () => {
             <Route path="/r/:category" component={HomePage} />
             <Route path="/u/:username" component={HomePage} />
             <Route exact path="/" component={HomePage} />
+            <Route render={() => <Redirect to="/" />}></Route>
           </Switch>
         </Container>
       </Background>

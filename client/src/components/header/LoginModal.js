@@ -4,6 +4,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import WarningPopup from "../shared/WarningPopup";
 import { login } from "../../services/auth";
+import styled from "styled-components/macro";
+
+const DemoButtonWrapper = styled.span`
+  margin-left: 10px;
+`;
 
 const LoginModal = ({ showLoginModal, closeLoginModal }) => {
   const [username, setUsername] = useState("");
@@ -22,6 +27,15 @@ const LoginModal = ({ showLoginModal, closeLoginModal }) => {
   const submitLoginInfo = e => {
     e.preventDefault();
     login(username, password).catch(err => {
+      setWarningMessage(err.response.data.error);
+      setShowWarning(true);
+      setTimeout(() => setShowWarning(false), 3000);
+    });
+  };
+
+  const demoUserLogin = e => {
+    e.preventDefault();
+    login("DemoUser", "password").catch(err => {
       setWarningMessage(err.response.data.error);
       setShowWarning(true);
       setTimeout(() => setShowWarning(false), 3000);
@@ -53,6 +67,9 @@ const LoginModal = ({ showLoginModal, closeLoginModal }) => {
             ></Form.Control>
           </Form.Group>
           <Button type="Submit">Submit</Button>
+          <DemoButtonWrapper onClick={demoUserLogin}>
+            <Button variant="info">Demo User</Button>
+          </DemoButtonWrapper>
         </Form>
       </Modal.Body>
     </Modal>

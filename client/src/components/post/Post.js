@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import PostBottomInfo from "./PostBottomInfo";
@@ -52,11 +52,16 @@ const Post = () => {
   const [post, setPost] = useState({});
   const [postLoading, setPostLoading] = useState(true);
 
+  const history = useHistory();
+
   const { id } = useParams();
   useEffect(() => {
     getPost(id)
       .then(res => {
         setPost(res);
+      })
+      .catch(() => {
+        history.push("/");
       })
       .finally(() => setPostLoading(false));
   }, [id]);

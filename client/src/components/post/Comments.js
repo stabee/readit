@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import moment from "moment";
 import styled from "styled-components/macro";
@@ -29,8 +29,6 @@ const DeleteButton = styled.span`
 `;
 
 const Comment = ({ post, postLoading }) => {
-  const history = useHistory();
-
   const handleDelete = commentId => {
     deleteComment(commentId).then(
       () => (window.location = `/posts/${post._id}`)
