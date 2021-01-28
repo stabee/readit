@@ -6,7 +6,7 @@ export const signUp = (username, password) => {
 
 export const login = (username, password) => {
   return axios
-    .post("http://www.localhost:3001/api/login", {
+    .post("/api/login", {
       username,
       password
     })
