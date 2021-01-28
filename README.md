@@ -3,6 +3,7 @@ Simplified version of a Reddit clone using Mongo, Express, and React. Built as a
 
 # Demo
 <a href="https://scott-readit.herokuapp.com/">Live Site</a>
+<br>
 <a href="https://github.com/stabee/readit">Github</a>
 
 # Running Locally
