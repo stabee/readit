@@ -10,6 +10,7 @@ const FlexContainer = styled.div`
 
 const LeftContainer = styled.div`
   flex: 1 1 0%;
+  max-width: 100vw;
 `;
 
 const HomePage = () => {
